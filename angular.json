@@ -1,0 +1,106 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "Netflix": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:application": {
+          "strict": true
+        }
+      },
+      "root": "projects/netflix",
+      "sourceRoot": "projects/netflix/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/Netflix",
+            "index": "projects/netflix/src/index.html",
+            "main": "projects/netflix/src/main.ts",
+            "polyfills": "projects/netflix/src/polyfills.ts",
+            "tsConfig": "projects/netflix/tsconfig.app.json",
+            "assets": [
+              "projects/netflix/src/favicon.ico",
+              "projects/netflix/src/assets"
+            ],
+            "styles": [
+              "projects/netflix/src/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "projects/netflix/src/environments/environment.ts",
+                  "with": "projects/netflix/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "Netflix:build:production"
+            },
+            "development": {
+              "browserTarget": "Netflix:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "Netflix:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/netflix/src/test.ts",
+            "polyfills": "projects/netflix/src/polyfills.ts",
+            "tsConfig": "projects/netflix/tsconfig.spec.json",
+            "karmaConfig": "projects/netflix/karma.conf.js",
+            "assets": [
+              "projects/netflix/src/favicon.ico",
+              "projects/netflix/src/assets"
+            ],
+            "styles": [
+              "projects/netflix/src/styles.css"
+            ],
+            "scripts": []
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "Netflix"
+}
